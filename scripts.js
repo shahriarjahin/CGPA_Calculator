@@ -61,7 +61,7 @@ async function loadFacultyData() {
 
   try {
     // Fetch from the data/ folder
-    const response = await fetch(`data/${faculty}.csv`);
+    const response = await fetch(`/data/${faculty}.csv`);
     if (!response.ok) throw new Error("File not found");
     const csvData = await response.text();
     
