@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAU CGPA Calculator</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <img src="data/img/logo.png" alt="Gazipur Agricultural University Logo" class="uni-logo">
+    <div class="uni-name">GAZIPUR AGRICULTURAL UNIVERSITY</div>
+    
+    
+    <h1>CGPA Calculator</h1>
+    <p>Select your faculty, year &amp; term to load subjects and auto-calculate past credits.</p>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Academic Info</div>
+    
+    <div class="row3">
+      <div class="field">
+        <label>Faculty</label>
+        <select id="facultySel" onchange="loadFacultyData()">
+        <option value="" disabled selected>Select Faculty</option>
+          <option value="fisheries">Fisheries</option>
+          <option value="agriculture">Agriculture</option>
+          <option value="aerd">Ag. Econ & Rural Dev (AERD)</option>
+          <option value="dvm">Veterinary Medicine (DVM)</option>
+          <option value="forestry">Forestry & Environment</option>
+          <option value="ageng">Agricultural Engineering</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label>Year</label>
+        <select id="yearSel" onchange="updateTerms()" disabled>
+          <option value="">Loading Data...</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label>Term</label>
+        <select id="termSel" onchange="loadSubjects()">
+          <option value="">Select term</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="row2" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--color-border-tertiary);">
+      <div class="field">
+        <label>Previous Cumulative CGPA <span style="color:var(--color-text-tertiary); font-weight: 400;">(optional)</span></label>
+        <input type="number" id="prevCgpa" placeholder="e.g. 3.45" min="0" max="4" step="0.01" oninput="recalc()">
+      </div>
+      <div class="field">
+        <label>Total credits completed <span style="color:var(--color-accent); font-weight: 400;">(Auto-calculated)</span></label>
+        <input type="number" id="prevCredits" placeholder="e.g. 45" min="0" step="1" oninput="recalc()">
+      </div>
+    </div>
+  </div>
+  <!-- <div class="badge"></div> -->
+  <div class="card" id="subjectCard" style="display:none">
+    <div class="section-label">Current Term Subjects</div>
+    <div class="subj-hdr">
+      <div class="col-hdr">Subject</div>
+      <div class="col-hdr" style="text-align:center">Credits</div>
+      <div class="col-hdr" style="text-align:center">Grade</div>
+      <div></div>
+    </div>
+    
+    <div id="subjectList"></div>
+    
+    <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--color-border-tertiary); display:flex; justify-content:space-between; align-items: center;">
+      <span style="color:var(--color-text-secondary); font-weight: 500;">Total credits this term</span>
+      <span id="totalCrDisplay" style="font-weight:600; color:var(--color-text-primary); font-size: 16px; background: var(--color-background-secondary); padding: 4px 12px; border-radius: 20px;">—</span>
+    </div>
+    
+    <button class="reset-btn" onclick="resetGrades()">Reset all grades</button>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <div class="section-label">Results</div>
+    <div class="result-grid">
+      <div class="metric">
+        <div class="metric-label">Term GPA</div>
+        <div class="metric-value" id="termGpa">—</div>
+        <div class="metric-sub" id="termCredits"></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Cumulative CGPA</div>
+        <div class="metric-value" id="cgpaVal">—</div>
+        <div class="metric-sub" id="cgpaSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Letter Grade</div>
+        <div class="metric-value" id="letterGrade" style="margin-top: 4px;">—</div>
+        <div class="metric-sub" id="gradeStatus" style="margin-top: 8px;"></div>
+      </div>
+    </div>
+    
+    <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:500; color:var(--color-text-tertiary); margin-top:8px;">
+      <span>0.00</span><span>2.00</span><span>3.00</span><span>4.00</span>
+    </div>
+    
+    <div id="subjectBreakdown" style="margin-top:24px"></div>
+  </div>
+  <div class="footer">
+      <p>&copy; 2026 IT Society,GAU. All rights reserved.</p>
+      <p style="margin-top: 6px;">Developed by <a href="https://www.facebook.com/shahriarmorshedjahin" target="_blank" rel="noopener noreferrer">Jahin</a></p>
+    </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
