@@ -60,9 +60,8 @@ async function loadFacultyData() {
   SUBJECTS = {}; 
 
   try {
-    // GITHUB FIX: Use strict relative pathing with './' so GitHub Pages knows 
-    // exactly where to look, even if the site is hosted in a sub-repository.
-    const csvPath = `./data/${faculty}.csv`;
+    
+    const csvPath = `data/${faculty}.csv`;
     
     // GITHUB FIX: Added a console log so if it breaks on the live site, 
     // you can press F12 and see exactly what path it was trying to find.
