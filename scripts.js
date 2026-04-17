@@ -60,9 +60,19 @@ async function loadFacultyData() {
   SUBJECTS = {}; 
 
   try {
-    // Fetch from the data/ folder
-    const response = await fetch(`/data/${faculty}.csv`);
-    if (!response.ok) throw new Error("File not found");
+    // GITHUB FIX: Use strict relative pathing with './' so GitHub Pages knows 
+    // exactly where to look, even if the site is hosted in a sub-repository.
+    const csvPath = `./data/${faculty}.csv`;
+    
+    // GITHUB FIX: Added a console log so if it breaks on the live site, 
+    // you can press F12 and see exactly what path it was trying to find.
+    console.log(`Attempting to fetch data from: ${csvPath}`);
+    
+    const response = await fetch(csvPath);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const csvData = await response.text();
     
     // Parse the lines
@@ -94,10 +104,12 @@ async function loadFacultyData() {
     const facultyDropdown = document.getElementById("facultySel");
     const facultyName = facultyDropdown.options[facultyDropdown.selectedIndex].text;
     document.querySelector(".badge").textContent = facultyName + " Faculty";
+    
+    console.log("Successfully loaded data for:", facultyName);
 
   } catch (err) {
-    console.error(err);
-    alert(`Could not load data/${faculty}.csv. Please ensure the file exists and you are using a local web server.`);
+    console.error("Fetch failed:", err);
+    alert(`Could not load the data file for this faculty. \n\nEnsure that the file exists at ./data/${faculty}.csv and that the spelling and capitalization are exactly correct on GitHub.`);
     yearSel.innerHTML = '<option value="">Failed to load data</option>';
   }
 }
